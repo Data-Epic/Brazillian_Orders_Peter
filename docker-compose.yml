@@ -1,0 +1,16 @@
+version: '3'
+services:
+  brazillian-orders-api-deployment:
+    ports:
+      - "8000:8000"
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: brazillian-orders-api-deployment
+    container_name: api-deployment-container
+    volumes:
+      - ./Brazillian_Orders_Peter/entrypoint.sh:/Brazillian_Orders_Peter/entrypoint.sh
+    entrypoint: ["/entrypoint.sh"]
+    tty: true
+    stdin_open: true
