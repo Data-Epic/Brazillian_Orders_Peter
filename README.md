@@ -9,24 +9,28 @@ A Flask Application is created that encapsulates all processing and retrieval fu
 - Data transformation and modeling to create dimensional and fact tables
 - Aata analysis to generate insightful aggregate tables
 - Data loading into a DuckDB database
-- API endpoints that encapsulates all data uploading, transformation and retrieval
+- Restful API endpoints that encapsulates all data uploading, transformation and retrieval
 - Comprehensive unit tests for data preprocessing database operations, and API endpoints
 - Full dockerization of the ETL pipeline for reproducibility and portability
-- CI/CD Pipeline using github actions that auto deploy the API endpoints to EC2 Instance
+- CI/CD Pipeline using github actions for automated deployment to AWS EC2
 
 ## Prerequisites
 
 - Docker and Docker Compose
 - Git
+- AWS account (for EC2 deployment)
 
 ## Quick Start
 
 1. Clone the repository:
 git clone https://github.com/Data-Epic/Brazillian_Orders_Peter.git
 
+cd Brazillian_Orders_Peter
+
 2. Download the dataset:
 - Get the list dataset and information from [Kaggle](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce), unzip the downloaded zip file
-- Create a `data/` directory Place all CSV files in the `data/` directory
+- Create a `data/` directory 
+- Place all CSV files in the `data/` directory
 
 3. Build and run the Docker container:
 docker-compose up --build
@@ -36,22 +40,70 @@ Build the Docker image based on the provided Dockerfile.
 Install necessary dependencies.
 Start the flask application.
 
-4. Also, In a new terminal, you can start a new container:
+4. In a new terminal, you can start a new container:
 docker start -ai api-deployment-container
 
-5. Load all the tables by uploading the required csv file in the data loading endpoints
-6. View all the loaded and analytical tables that has been loaded into the database in the data retrieval endpoints
-7. Process and analyze the tables by executing the data processing endpoints
+Certainly. I'll provide an improved version of your README file with better structure, more details, and clearer instructions. Here's an enhanced version:
+markdownCopy# Brazilian Customers Orders ETL Pipeline Application
+
+## Overview
+
+This project implements an ETL (Extract, Transform, Load) pipeline application for the Brazilian E-Commerce Public Dataset by Olist. It uses Polars for data processing and DuckDB as the target database. The entire pipeline, including data ingestion scripts, unit tests, and the DuckDB database, is containerized using Docker for easy deployment and scalability. A Flask application provides API endpoints for data processing and retrieval, and a CI/CD pipeline automates deployment to an EC2 instance.
+
+## Features
+
+- Data extraction from multiple CSV files in the Olist dataset
+- Data transformation and modeling to create dimensional and fact tables
+- Data analysis to generate insightful aggregate tables
+- Data loading into a DuckDB database
+- RESTful API endpoints for data uploading, transformation, and retrieval
+- Comprehensive unit tests for data preprocessing, database operations, and API endpoints
+- Full dockerization of the ETL pipeline for reproducibility and portability
+- CI/CD pipeline using GitHub Actions for automated deployment to EC2
+
+## Prerequisites
+
+- Docker and Docker Compose
+- Git
+- AWS account (for EC2 deployment)
+
+## Quick Start
+
+1. Clone the repository:
+git clone https://github.com/Data-Epic/Brazillian_Orders_Peter.git
+cd Brazillian_Orders_Peter
+Copy
+2. Download the dataset:
+- Get the dataset from [Kaggle](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
+- Unzip the downloaded file
+- Create a `data/` directory in the project root
+- Place all CSV files in the `data/` directory
+
+3. Build and run the Docker container:
+docker-compose up --build
+Copy
+This will:
+- Build the Docker image based on the provided Dockerfile
+- Install necessary dependencies
+- Start the Flask application
+
+4. In a new terminal, you can start a new container:
+docker start -ai api-deployment-container
+Copy
+5. Use the API:
+- Load tables by uploading CSV files to the data loading endpoints
+- View loaded and analytical tables using the data retrieval endpoints
+- Process and analyze tables by executing the data processing endpoints
 
 Input Data
 
-olist_customers_dataset.csv
-olist_order_items_dataset.csv
-olist_orders_dataset.csv
-olist_products_dataset.csv
-olist_sellers_dataset.csv
-product_category_name_translation.csv
-olist_order_payments_dataset.csv
+- olist_customers_dataset.csv
+- olist_order_items_dataset.csv
+- olist_orders_dataset.csv
+- olist_products_dataset.csv
+- olist_sellers_dataset.csv
+- product_category_name_translation.csv
+- olist_order_payments_dataset.csv
 
 Output Tables
 The application generates the following analytical and aggregate tables in a DuckDB database:
@@ -64,23 +116,124 @@ top_average_delivery_time
 loyal_customers
 
 Project Structure
-customer_orders_analysis/
-├── data/                  # Input CSV files you have to create this when you clone to local
+Certainly. I'll provide an improved version of your README file with better structure, more details, and clearer instructions. Here's an enhanced version:
+markdownCopy# Brazilian Customers Orders ETL Pipeline Application
+
+## Overview
+
+This project implements an ETL (Extract, Transform, Load) pipeline application for the Brazilian E-Commerce Public Dataset by Olist. It uses Polars for data processing and DuckDB as the target database. The entire pipeline, including data ingestion scripts, unit tests, and the DuckDB database, is containerized using Docker for easy deployment and scalability. A Flask application provides API endpoints for data processing and retrieval, and a CI/CD pipeline automates deployment to an EC2 instance.
+
+## Features
+
+- Data extraction from multiple CSV files in the Olist dataset
+- Data transformation and modeling to create dimensional and fact tables
+- Data analysis to generate insightful aggregate tables
+- Data loading into a DuckDB database
+- RESTful API endpoints for data uploading, transformation, and retrieval
+- Comprehensive unit tests for data preprocessing, database operations, and API endpoints
+- Full dockerization of the ETL pipeline for reproducibility and portability
+- CI/CD pipeline using GitHub Actions for automated deployment to EC2
+
+## Prerequisites
+
+- Docker and Docker Compose
+- Git
+- AWS account (for EC2 deployment)
+
+## Quick Start
+
+1. Clone the repository:
+git clone https://github.com/Data-Epic/Brazillian_Orders_Peter.git
+cd Brazillian_Orders_Peter
+Copy
+2. Download the dataset:
+- Get the dataset from [Kaggle](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
+- Unzip the downloaded file
+- Create a `data/` directory in the project root
+- Place all CSV files in the `data/` directory
+
+3. Build and run the Docker container:
+docker-compose up --build
+Copy
+This will:
+- Build the Docker image based on the provided Dockerfile
+- Install necessary dependencies
+- Start the Flask application
+
+4. In a new terminal, you can start a new container:
+docker start -ai api-deployment-container
+Copy
+5. Use the API:
+- Load tables by uploading CSV files to the data loading endpoints
+- View loaded and analytical tables using the data retrieval endpoints
+- Process and analyze tables by executing the data processing endpoints
+
+## Input Data
+
+The following CSV files are required:
+
+- olist_customers_dataset.csv
+- olist_order_items_dataset.csv
+- olist_orders_dataset.csv
+- olist_products_dataset.csv
+- olist_sellers_dataset.csv
+- product_category_name_translation.csv
+- olist_order_payments_dataset.csv
+
+## Output Tables
+
+The application generates the following analytical and aggregate tables in the DuckDB database:
+
+- fact_table
+- top_sellers
+- top_selling_product_category
+- order_status_count
+- top_average_delivery_time
+- loyal_customers
+
+## Project Structure
+Brazillian_Orders_Peter/
+├── data/                  # Input CSV files (create this directory)
 ├── src/                   # Source code files
-|── tests/                 # Unit tests
-|-- gitignore              #gitignore file
+│   ├── data_extraction.py
+│   ├── data_transformation.py
+│   ├── data_loading.py
+│   └── main.py
+├── tests/                 # Unit tests
+├── .gitignore             # Git ignore file
 ├── Dockerfile             # Docker configuration
 ├── docker-compose.yml     # Docker Compose configuration
-|-- entrypoint.sh          # bash command line scrupts
+├── entrypoint.sh          # Bash command line scripts
 ├── requirements.txt       # Application dependencies
 └── README.md              # This file
 
-Customization
-Updating Dependencies:
+## API Endpoints
 
-If you need to update or add dependencies and packages, modify the requirements.txt file and rebuild the Docker image using:
+Detailed documentation of API endpoints will be available at `/docs` when the application is running.
+
+## Customization
+
+### Updating Dependencies
+
+If you need to update or add dependencies:
+
+1. Modify the `requirements.txt` file
+2. Rebuild the Docker image:
 
 docker compose up --build
 
-Dependency Issues:
-Ensure all required dependencies are listed in the requirements.txt file.
+### Environment Variables
+
+Configure environment-specific settings in a `.env` file:
+DATABASE_URL=your_database_url
+AWS_ACCESS_KEY_ID=your_aws_access_key
+AWS_SECRET_ACCESS_KEY=your_aws_secret_key
+
+## Deployment
+
+The application is automatically deployed to an EC2 instance via GitHub Actions when changes are pushed to the main branch.
+
+## Troubleshooting
+
+- Ensure all required CSV files are in the `data/` directory
+- Check Docker logs for any error messages:
