@@ -1,0 +1,26 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "orders_api_deployment" ]
+  pull_request:
+    branches: ["orders_api_deployment"]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Login Dockerhub
+      env:
+          DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
+          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: ddocker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+    - name: Build the Docker image
+      run: docker build -t brazillian_orders_api_deployment .
+    - name: Push to Dockerhub
+      run: docker push savepeter2/brazillian_orders_api_deployment:latest
