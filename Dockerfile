@@ -7,21 +7,16 @@ WORKDIR /Brazillian_Orders_Peter
 COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+
+COPY entrypoint.sh /Brazillian_Orders_Peter/entrypoint.sh
+RUN chmod +x /Brazillian_Orders_Peter/entrypoint.sh
 
 #copy the entire src directory, which includes the main files
 COPY src /Brazillian_Orders_Peter/src
-COPY data /Brazillian_Orders_Peter/data
-
 #copy the entire tests directory, which includes the test files
 COPY tests /Brazillian_Orders_Peter/tests
 
-# Set the working directory to where the test files are located
-WORKDIR /Brazillian_Orders_Peter/tests
-RUN python -m unittest -v
-
-WORKDIR /Brazillian_Orders_Peter
+COPY run_tests.py /Brazillian_Orders_Peter/run_tests.py
 
 
 
