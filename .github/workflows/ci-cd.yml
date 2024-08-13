@@ -1,0 +1,39 @@
+name: Brazillian Orders CI/CD Pipeline to EC2 
+
+on:
+  push:
+    branches: [ "orders_api_deployment" ]
+  pull_request:
+    branches: [ "orders_api_deployment" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Login Dockerhub
+      env:
+          DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
+          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWRORD}}
+      run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+    - name: Build the Docker Image
+      run: docker build - brazillian_orders_deployment .
+    - name: Push to Docker hub
+      run: docker push savepeter2/brazillian_orders_deployment:latest
+
+notify:
+  needs: build
+  runs-on: ubuntu-latest
+
+  steps:
+  - name: Pull Docker Image from Dockerhub
+    run: sudo docker pull savepeter2/brazillian_orders_deployment:latest
+  - name: delete the existing container
+    run: docker rm -f api-deployment-container || true
+  - name: Run the Docker Container with latest image being pulled
+    run: docker run -d -p 8000:8000 --name api-deployment-container savepeter2/brazillian_orders_deployment:latest
+
