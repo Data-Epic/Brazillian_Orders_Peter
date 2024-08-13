@@ -7,7 +7,7 @@ on:
     branches: [ "orders_api_deployment" ]
 
 jobs:
-  build_and_push_docker_image:
+  build_and_push_image:
     name: Login, Build and Push Docker Image
     runs-on: ubuntu-latest
     environment: development
@@ -24,8 +24,8 @@ jobs:
     - name: Push to Docker hub
       run: docker push savepeter2/brazillian_orders_deployment:latest
 
-  notify:
-    needs: build_and_push_docker_image
+  pull_and_run_container:
+    needs: build_and_push_image
     runs-on: ubuntu-latest
     steps:
     - name: Pull Docker Image from Dockerhub
