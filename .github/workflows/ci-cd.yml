@@ -21,7 +21,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Build the Docker Image
       # run: docker build -t savepeter2/brazillian_orders_deployment:latest .
-      run: docker-compose build
+      run: docker compose build 
     - name: Push to Docker hub
       run: docker push savepeter2/brazillian_orders_deployment:latest
 
