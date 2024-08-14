@@ -47,3 +47,5 @@ jobs:
           docker rm brazillian-orders-api || true
           docker run -d --name brazillian-orders-api -p 8000:8000 savepeter2/brazillian-orders-api:latest
         '
+
+        
