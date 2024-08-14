@@ -22,8 +22,8 @@ jobs:
     - name: Build the Docker Image
       # run: docker build -t savepeter2/brazillian_orders_deployment:latest .
       run: docker compose build 
-    # - name: Tag the image
-    #   run: docker tag brazillian_orders_deployment savepeter2/brazillian_orders_deployment:latest
+    - name: Tag the image
+      run: docker tag brazillian_orders_deployment savepeter2/brazillian_orders_deployment:latest
     - name: Push to Docker hub
       run: docker push savepeter2/brazillian-orders-api-deployment:latest
 
