@@ -33,4 +33,4 @@ jobs:
     - name: delete the existing container
       run: docker rm -f api-deployment-container || true
     - name: Run the Docker Container with latest image being pulled
-      run: docker run -d -p 8000:8000 --name api-deployment-container savepeter2/brazillian_orders_deployment:latest
+      run: docker run -p 8000:8000 --name api-deployment-container savepeter2/brazillian_orders_deployment:latest
