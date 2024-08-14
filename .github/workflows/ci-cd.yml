@@ -34,12 +34,16 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Copy docker-compose.yml to EC2
+    - name: Deploy to EC2
       env:
         PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         HOST: ${{ secrets.EC2_HOST }}
         USER: ${{ secrets.EC2_USER }}
       run: |
         echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-        scp -o StrictHostKeyChecking=no -i private_key docker-compose.yml ${USER}@${HOST}:~/docker-compose.yml
-    
+        ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} '
+          docker pull savepeter2/brazillian-orders-api:latest
+          docker stop brazillian-orders-api || true
+          docker rm brazillian-orders-api || true
+          docker run -d --name brazillian-orders-api -p 8000:8000 savepeter2/brazillian-orders-api:latest
+        '
