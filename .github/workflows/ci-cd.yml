@@ -25,6 +25,7 @@ jobs:
     - name: Tag the image
       run: docker tag brazillian-orders-api-deployment savepeter2/brazillian-orders-api-deployment:latest
     - name: Push to Docker hub
+      run: docker push savepeter2/brazillian-orders-api-deployment:latest
 
   deploy_to_ec2:
     needs: build_and_push_image
