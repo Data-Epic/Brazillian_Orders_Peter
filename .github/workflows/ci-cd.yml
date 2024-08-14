@@ -30,15 +30,15 @@ jobs:
     needs: build_and_push_image
     runs-on: ubuntu-latest
     steps:
-    - name: Deploy to EC2
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Copy docker-compose.yml to EC2
       env:
         PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         HOST: ${{ secrets.EC2_HOST }}
         USER: ${{ secrets.EC2_USER }}
       run: |
         echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-        ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} '
-          docker compose pull
-          docker compose down
-          docker compose up -d
-        '
+        scp -o StrictHostKeyChecking=no -i private_key docker-compose.yml ${USER}@${HOST}:~/docker-compose.yml
+    
