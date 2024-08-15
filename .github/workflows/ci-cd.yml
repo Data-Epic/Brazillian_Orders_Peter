@@ -45,8 +45,6 @@ jobs:
             ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} '
               sudo su - root << EOF
                 docker pull savepeter2/brazillian-orders-api-deployment:latest
-                docker stop api-deployment-container || true
-                docker rm api-deployment-container || true
                 docker run -p 8000:8000 savepeter2/brazillian-orders-api-deployment:latest
         EOF
             '
