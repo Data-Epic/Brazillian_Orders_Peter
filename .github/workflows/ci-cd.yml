@@ -46,7 +46,7 @@ jobs:
               sudo su - root << EOF
                 sudo docker pull savepeter2/brazillian-orders-api-deployment:latest
                 sudo docker rm -f api-deployment-container || true
-                sudo docker run -p 80:8000 savepeter2/brazillian-orders-api-deployment:latest
+                sudo docker run -p --name api-deployment-container 80:8000 savepeter2/brazillian-orders-api-deployment:latest
         EOF
             '
 
