@@ -28,6 +28,7 @@ jobs:
       run: docker push savepeter2/brazillian-orders-api-deployment:latest
 
   deploy_to_ec2:
+    name: Pull image from Dockerhub and deploy to EC2
     needs: build_and_push_image
     runs-on: ubuntu-latest
     steps:
@@ -46,10 +47,9 @@ jobs:
                 docker pull savepeter2/brazillian-orders-api-deployment:latest
                 docker stop api-deployment-container || true
                 docker rm api-deployment-container || true
-                docker run -d --name brazillian-orders-api-deployment -p 8000:8000 savepeter2/brazillian-orders-api-deployment:latest
+                docker run -p 8000:8000 savepeter2/brazillian-orders-api-deployment:latest
         EOF
             '
-
 
        
 
