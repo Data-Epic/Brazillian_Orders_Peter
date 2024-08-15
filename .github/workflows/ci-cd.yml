@@ -43,10 +43,10 @@ jobs:
         echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
             ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} '
               sudo su - root << EOF
-                docker pull savepeter2/brazillian-orders-api:latest
-                docker stop brazillian-orders-api || true
-                docker rm brazillian-orders-api || true
-                docker run -d --name brazillian-orders-api -p 8000:8000 savepeter2/brazillian-orders-api:latest
+                docker pull savepeter2/brazillian-orders-api-deployment:latest
+                docker stop api-deployment-container || true
+                docker rm api-deployment-container || true
+                docker run -d --name brazillian-orders-api-deployment -p 8000:8000 savepeter2/brazillian-orders-api-deployment:latest
         EOF
             '
 
