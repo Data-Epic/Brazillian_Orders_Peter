@@ -5,11 +5,14 @@ WORKDIR /Brazillian_Orders_Peter
 
 #install dependencies
 COPY requirements.txt requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
-
+RUN pip install -r requirements.txt
+# --no-cache-dir 
 #copy the entrypoint.sh file to the container
 COPY entrypoint.sh /Brazillian_Orders_Peter/entrypoint.sh
 RUN chmod +x /Brazillian_Orders_Peter/entrypoint.sh
+
+#copy the data directory to the container
+COPY data /Brazillian_Orders_Peter/data
 
 EXPOSE 8080
 #copy the entire src directory, which includes the main files
