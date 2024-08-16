@@ -46,7 +46,11 @@ jobs:
               sudo su - root << EOF
                 sudo docker pull savepeter2/brazillian-orders-api-deployment:latest
                 sudo docker rm -f api-deployment-container || true
-                sudo docker run -p  80:8000 --name api-deployment-container savepeter2/brazillian-orders-api-deployment
+                sudo docker run -d -p 8080:8000 \
+                -e PORT=8000 \
+                --name api-deployment-container \
+                --ENTRYPOINT ["/Brazillian_Orders_Peter/entrypoint.sh"] \
+                savepeter2/brazillian-orders-api-deployment:latest
         EOF
             '
 
