@@ -11,7 +11,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY entrypoint.sh /Brazillian_Orders_Peter/entrypoint.sh
 RUN chmod +x /Brazillian_Orders_Peter/entrypoint.sh
 
-
+EXPOSE 8080
 #copy the entire src directory, which includes the main files
 COPY src /Brazillian_Orders_Peter/src
 #copy the entire tests directory, which includes the test files
