@@ -5,4 +5,4 @@ python run_tests.py
 echo "Starting the application..."
 python src/main.py 
 # echo "Keeping the container alive..."
-# tail -f /dev/null
+tail -f /dev/null
