@@ -14,7 +14,7 @@ RUN chmod +x /Brazillian_Orders_Peter/entrypoint.sh
 #copy the data directory to the container
 COPY data /Brazillian_Orders_Peter/data
 
-EXPOSE 8000
+EXPOSE 8080
 #copy the entire src directory, which includes the main files
 COPY src /Brazillian_Orders_Peter/src
 #copy the entire tests directory, which includes the test files
