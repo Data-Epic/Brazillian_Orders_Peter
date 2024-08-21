@@ -846,7 +846,9 @@ def api_load_top_sellers():
             except Exception as db_error:
                 db.rollback()
                 logger.error(f"Database operation failed: {str(db_error)}")
-                return jsonify({'error': 'Database operation failed', 'details': str(db_error)}), 500
+                return jsonify({'error': 'Database operation failed',
+                                "message": "Kindly confirm the Fact Table is loaded",
+                                 'details': str(db_error)}), 500
             
     except Exception as e:
         logger.error(f"An error occurred: {str(e)}")
@@ -922,7 +924,9 @@ def api_load_top_selling_product_category():
             except Exception as db_error:
                 db.rollback()
                 logger.error(f"Database operation failed: {str(db_error)}")
-                return jsonify({'error': 'Database operation failed', 'details': str(db_error)}), 500
+                return jsonify({'error': 'Database operation failed', 
+                                "message": "Kindly confirm the Fact Table is loaded",
+                                'details': str(db_error)}), 500
             
     except Exception as e:
         logger.error(f"An error occurred: {str(e)}")
@@ -1000,7 +1004,9 @@ def api_load_orders_status_analysis():
             except Exception as db_error:
                 db.rollback()
                 logger.error(f"Database operation failed: {str(db_error)}")
-                return jsonify({'error': 'Database operation failed', 'details': str(db_error)}), 500
+                return jsonify({'error': 'Database operation failed',
+                                "message": "Kindly confirm the Fact Table is loaded",
+                                 'details': str(db_error)}), 500
             
     except Exception as e:
         logger.error(f"An error occurred: {str(e)}")
@@ -1079,7 +1085,9 @@ def api_load_average_delivery_duration():
             except Exception as db_error:
                 db.rollback()
                 logger.error(f"Database operation failed: {str(db_error)}")
-                return jsonify({'error': 'Database operation failed', 'details': str(db_error)}), 500
+                return jsonify({'error': 'Database operation failed',
+                                "message": "Kindly confirm the Fact Table is loaded",
+                                 'details': str(db_error)}), 500
             
     except Exception as e:
         logger.error(f"An error occurred: {str(e)}")
@@ -1155,7 +1163,9 @@ def api_load_loyal_customers():
             except Exception as db_error:
                 db.rollback()
                 logger.error(f"Database operation failed: {str(db_error)}")
-                return jsonify({'error': 'Database operation failed', 'details': str(db_error)}), 500
+                return jsonify({'error': 'Database operation failed', 
+                                "message": "Kindly confirm the Fact Table is loaded",
+                                'details': str(db_error)}), 500
             
     except Exception as e:
         logger.error(f"An error occurred: {str(e)}")
