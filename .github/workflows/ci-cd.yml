@@ -45,6 +45,7 @@ jobs:
             ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} '
               sudo su - root << EOF
                 sudo docker pull savepeter2/brazillian-orders-api-deployment:latest
+                sudo docker image prune
                 sudo docker rm -f api-deployment-container || true
                 sudo docker run -d -p 8080:8000 \
                 -e PORT=8000 \
@@ -54,7 +55,7 @@ jobs:
         EOF
             '
             
-            
+
 
 
 
