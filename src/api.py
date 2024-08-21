@@ -770,7 +770,9 @@ def api_process_fact_table():
             except Exception as db_error:
                 db.rollback()
                 logger.error(f"Database operation failed: {str(db_error)}")
-                return jsonify({'error': 'Database operation failed', 'details': str(db_error)}), 500
+                return jsonify({'error': 'Database operation failed',
+                                "message": "Kindly Confirm all the dimension tables are loaded",                                
+                                 'details': str(db_error)}), 500
             
     except Exception as e:
         logger.error(f"An error occurred: {str(e)}")
