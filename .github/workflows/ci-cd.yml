@@ -73,6 +73,9 @@ jobs:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
     environment: development
+    env:
+      API_PORT: ${{ secrets.API_PORT }}
+      CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
     steps:
     - name: Checkout the code
       uses: actions/checkout@v4
@@ -102,6 +105,8 @@ jobs:
         PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         HOST: ${{ secrets.EC2_HOST }}
         USER: ${{ secrets.EC2_USER }}
+        API_PORT: ${{ secrets.API_PORT }}
+        CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
       run: |
         echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
         ssh -o StrictHostKeyChecking=accept-new -i private_key ${USER}@${HOST} '
