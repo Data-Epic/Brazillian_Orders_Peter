@@ -13,9 +13,9 @@ from sqlalchemy import inspect
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.declarative import DeclarativeMeta
 
-def load_data(file_path) -> pl.DataFrame:
+def load_data(file_path: str) -> pl.DataFrame:
     try:
-        if isinstance(file_path, str):
+        if isinstance(file_path, str) == True:
             csv_format = file_path.endswith(".csv")
             excel_format = file_path.endswith(".xlsx")
             
@@ -52,14 +52,12 @@ def check_missing_duplcates(df: pl.DataFrame, df_name: str):
     if unique_count == filtered_df.shape[0]:
         print(f"No duplicates found in {df_name}")
 
+def transform_product_category_df(df:pl.DataFrame) -> pl.DataFrame:
 
-#i Want to link these tables together and establish a fact table
-#I will join the dataframes on the common columns
-#I wnant to create a unique for the product category dataframe,
-#  so that we can join it with the other dataframes
-
-def transform_product_category_df(df) -> pl.DataFrame:
-    if isinstance(df, pl.DataFrame):
+    """
+    This function adds an id column to the product category dataframe
+    """
+    if isinstance(df, pl.DataFrame) == True:
         if df.is_empty() == False:
             col_name = "product_category_id"
             df = df.with_columns(pl.Series(col_name, np.arange(1, len(df) + 1)))
@@ -70,8 +68,11 @@ def transform_product_category_df(df) -> pl.DataFrame:
     else:
         return "Please provide a valid dataframe"
 
-def transform__df(df) -> pl.DataFrame:
-    if isinstance(df, pl.DataFrame):
+def transform__df(df: pl.DataFrame) -> pl.DataFrame:
+    """
+    This function adds an id column to the polars dataframe
+    """
+    if isinstance(df, pl.DataFrame) == True:
         if df.is_empty() == False:
             col_name = "id"
             df = df.with_columns(pl.Series(col_name, np.arange(1, len(df) + 1)))
@@ -84,7 +85,9 @@ def transform__df(df) -> pl.DataFrame:
 
 def process_dim_table_df(db_table: list) -> pl.DataFrame:
     """
-    This adds an id column to the dataframe
+    This function processes the dim tables from the database
+    and returns a polars dataframe
+    
     """
     if isinstance(db_table, list) == True and db_table:
         df_columns = db_table[0].__table__.columns.keys()
@@ -154,17 +157,6 @@ def process_fact_table(list_of_dfs: list,
     else:
         return "Please provide a list of polars dataframes"
 
-        
-        
-
-#analysis
-#i want to get the top selling sellers
-#i want to get the most used payment type
-#I want to get the top loyal customers
-#I want to get the top selling product category
-#I want to get  the order status count 
-#I want to get the average delivery time for each product category
-#I want to get the average payment value by payment type
 
 def get_top_sellers(df: pl.DataFrame) -> pl.DataFrame:
     """
@@ -191,6 +183,9 @@ def get_top_sellers(df: pl.DataFrame) -> pl.DataFrame:
         return "Please provide the valid Fact table"
 
 def get_top_selling_product_category(df: pl.DataFrame) -> pl.DataFrame:
+    """
+    This function gets the top selling product category
+    """
     if isinstance(df, pl.DataFrame) == True:
         if df.is_empty() == False:
             top_selling_product_category = df.group_by("product_category_name_english").agg([
@@ -210,6 +205,9 @@ def get_top_selling_product_category(df: pl.DataFrame) -> pl.DataFrame:
         return "Please provide the valid Fact table"
 
 def get_orders_status_count(df: pl.DataFrame) -> pl.DataFrame:
+    """
+    This function gets the order status count
+    """
     if isinstance(df, pl.DataFrame) == True:
         if df.is_empty() == False:
             order_status_count = df.group_by("order_status").agg([
@@ -229,6 +227,9 @@ def get_orders_status_count(df: pl.DataFrame) -> pl.DataFrame:
         return "Please provide the valid Fact table"
 
 def get_average_delivery_duration(df: pl.DataFrame) -> pl.DataFrame:
+    """
+    This function gets the average delivery duration
+    """
     if isinstance(df, pl.DataFrame) == True:
         if df.is_empty() == False:
             delivery_time = df. \
@@ -261,6 +262,9 @@ def get_average_delivery_duration(df: pl.DataFrame) -> pl.DataFrame:
         return "Please provide the valid Fact table"
 
 def get_loyal_customers(df: pl.DataFrame) -> pl.DataFrame:
+    """
+    This function gets the loyal customers
+    """
     if isinstance(df, pl.DataFrame) == True:
         if df.is_empty() == False:
             loyal_customers = df.group_by("customer_unique_id").agg([
