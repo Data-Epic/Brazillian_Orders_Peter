@@ -1,8 +1,7 @@
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 import logging
+import polars as pl
 from src.database import get_db
 from src.processing import (load_data,
                         transform__df,
@@ -18,11 +17,11 @@ from flask import Flask, request, jsonify
 from flask_swagger_ui import get_swaggerui_blueprint
 from src.api import app
 from sqlalchemy import inspect
+from sqlalchemy.ext.declarative import declarative_base
 
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
-
 
 #configuring upload folder
 app.config['UPLOAD_FOLDER'] = 'uploads'
@@ -62,9 +61,9 @@ def upload_csv():
                   "file_path": file_path}
     
 
-def df_to_list_of_dicts(df):
+def df_to_list_of_dicts(df:pl.DataFrame):
     """
-    Converts a pandas DataFrame to a list of dictionaries
+    Converts a polars DataFrame to a list of dictionaries
     """
     new_df_dict = {}
     all_records = []
@@ -79,7 +78,7 @@ def df_to_list_of_dicts(df):
     
     return all_records
 
-def load_and_transform_data(file_path):
+def load_and_transform_data(file_path:str):
     """
     Load and transform the data in the CSV file
     """
@@ -94,7 +93,7 @@ def load_and_transform_data(file_path):
             "message": "Data loaded and transformed successfully",
             "data": list_dicts_df}
 
-def jsonify_loaded_data(new_data, data_list, model):
+def jsonify_loaded_data(new_data:list, data_list:list, model: declarative_base):
     """
     Converts the loaded data to JSON format
     """
@@ -108,9 +107,10 @@ def jsonify_loaded_data(new_data, data_list, model):
 
     return data_list
 
-def query_existing_data(model, list_dicts_df, db):
+def query_existing_data(model: declarative_base, list_dicts_df:list, db:get_db):
     """
-    Query existing model in the database
+    Function to Query existing model in the database
+
     """
       # Convert list of dictionaries to a list of tuples for better performance
     table_ids = tuple(record['id'] for record in list_dicts_df)
@@ -123,9 +123,9 @@ def query_existing_data(model, list_dicts_df, db):
 
     return existing_data, existing_data_ids
 
-def query_table_data(model, db):
+def query_table_data(model:declarative_base, db:get_db):
     """
-    Retrieve just the first 5 records from the table
+    Function to retrieve just the first 5 records from the table
     """
     records = db.query(model).all()
     records_filtered = records[:5]
@@ -140,16 +140,17 @@ def query_table_data(model, db):
     
     return records, records_list
 
-def process_dim_tables(db, Sellers,
-    Customers,
-    Orders,
-    Order_Items,
-    Order_Payments,
-    Products,
-    Product_Category
+def process_dim_tables(db: get_db, 
+    Sellers: list,
+    Customers: list,
+    Orders: list,
+    Order_Items: list,
+    Order_Payments: list,
+    Products: list,
+    Product_Category: list
 ):
     """
-    Process the dimension tables from the database e.g. Sellers, Customers
+    It Processes the dimension tables from the database e.g. Sellers, Customers
     and convert them to a dataframe in order to get a fact table from modelling them
     
     """
