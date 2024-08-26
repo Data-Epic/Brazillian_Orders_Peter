@@ -58,7 +58,7 @@ jobs:
 #     --name api-deployment-container \
 #     --entrypoint "/Brazillian_Orders_Peter/entrypoint.sh" \
 #     savepeter2/brazillian-orders-api-deployment:latest
-# EOF
+        EOF
             '
             
 
