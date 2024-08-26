@@ -2,17 +2,17 @@ version: '3'
 services:
   brazillian-orders-api-deployment:
     ports:
-      - "${API_PORT:-8080}:${CONTAINER_PORT:-8000}"
+      - "${API_PORT}:${CONTAINER_PORT}"
     platform: linux/amd64
     build:
       context: .
       dockerfile: Dockerfile
-    image: brazillian-orders-api-deployment
+    image: savepeter2/brazillian-orders-api-deployment:latest
     volumes:
       - ./data:/Brazillian_Orders_Peter/data
     container_name: api-deployment-container
     entrypoint: ["/Brazillian_Orders_Peter/entrypoint.sh"]
-    environment:
-      - PORT=${CONTAINER_PORT:-8000}
+    # environment:   
+    #   - PORT=${CONTAINER_PORT:-8000}
     tty: true
     stdin_open: true
