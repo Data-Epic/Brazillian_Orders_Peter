@@ -108,8 +108,8 @@ jobs:
         API_PORT: ${{ secrets.API_PORT }}
         CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
       run: |
-        echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-        ssh -o StrictHostKeyChecking=accept-new -i private_key ${USER}@${HOST} '
+        echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
+            ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST}} '
           sudo docker compose pull
           sudo docker compose down
           sudo docker compose up -d
