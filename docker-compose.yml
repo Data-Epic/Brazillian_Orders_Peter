@@ -1,4 +1,3 @@
-version: '3'
 services:
   brazillian-orders-api-deployment:
     ports:
