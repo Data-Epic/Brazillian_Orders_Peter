@@ -2,9 +2,9 @@ name: Brazillian Orders CI/CD Pipeline to EC2
 
 on:
   push:
-    branches: [ "orders_api_deployment" ]
+    branches: [ "orders-deployment-2" ]
   pull_request:
-    branches: [ "orders_api_deployment" ]
+    branches: [ "orders-deployment-2" ]
 
 jobs:
   build_and_push_image:
@@ -19,13 +19,15 @@ jobs:
       with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-    - name: remove existing image if it exists
-      run: docker image rm savepeter2/brazillian-orders-api-deployment:latest || true
+    - name: Remove all unused images
+      run: docker image prune -a -f
+
+    # - name: remove existing image if it exists
+    #   run: docker image rm savepeter2/brazillian-orders-api-deployment:latest || true
     - name: Build the Docker Image
-      # run: docker build -t savepeter2/brazillian_orders_deployment:latest .
       run: docker compose build
-    - name: Tag the image
-      run: docker tag brazillian-orders-api-deployment savepeter2/brazillian-orders-api-deployment:latest
+    # - name: Tag the image
+    #   run: docker tag brazillian-orders-api-deployment savepeter2/brazillian-orders-api-deployment:latest
     - name: Push to Docker hub
       run: docker push savepeter2/brazillian-orders-api-deployment:latest
 
@@ -46,14 +48,17 @@ jobs:
         echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
             ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} '
               sudo su - root << EOF
-                sudo docker pull savepeter2/brazillian-orders-api-deployment:latest
-                sudo docker rm -f api-deployment-container || true
-                sudo docker run -d -p 8080:8000 \
-                -e PORT=8000 \
-                --name api-deployment-container \
-                --entrypoint "/Brazillian_Orders_Peter/entrypoint.sh" \
-                savepeter2/brazillian-orders-api-deployment:latest
-        EOF
+    # sudo docker pull savepeter2/brazillian-orders-api-deployment:latest
+                sudo docker compose down
+    #sudo docker rm -f api-deployment-container || true
+                sudo docker compose pull
+                sudo docker compose up -d
+#     sudo docker run -d -p 8080:8000 \
+#     -e PORT=8000 \
+#     --name api-deployment-container \
+#     --entrypoint "/Brazillian_Orders_Peter/entrypoint.sh" \
+#     savepeter2/brazillian-orders-api-deployment:latest
+# EOF
             '
             
 
