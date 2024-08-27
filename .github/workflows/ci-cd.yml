@@ -69,7 +69,7 @@ on:
     branches: [ "orders_api_deployment" ]
 
 jobs:
-  build_and_run_image:
+  build_image:
     name: Build Docker Image
     runs-on: ubuntu-latest
     environment: development
@@ -84,11 +84,19 @@ jobs:
     - name: Checkout the code
       uses: actions/checkout@v4
 
+    - name: Remove all unused images
+      run: docker image prune -a -f
+      
     - name: Build the Docker Image
       run: docker compose build
 
-    - name: Remove all unused images
-      run: docker image prune -a -f
+jobs:
+  deploy_to_ec2:
+    name: Deploy to EC2
+    needs: build_image
+    runs-on: ubuntu-latest
+    steps:
+    - name: copy Docker Compose file to EC2
 
       # - name: Copy Docker Compose file to EC2
       #   run: |
@@ -100,7 +108,7 @@ jobs:
             ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} '
             export API_PORT=${{ secrets.API_PORT }}
             export CONTAINER_PORT=${{ secrets.CONTAINER_PORT }}
-            
+
             sudo docker compose down
             sudo docker compose up -d
           '
