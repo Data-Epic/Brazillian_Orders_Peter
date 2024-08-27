@@ -79,26 +79,40 @@ jobs:
         USER: ${{ secrets.EC2_USER }}
         API_PORT: ${{ secrets.API_PORT }}
         CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
-    
-    steps:
+   steps:
     - name: Checkout the code
       uses: actions/checkout@v4
 
-    - name: Remove all unused images
-      run: docker image prune -a -f
+    - name: Setup SSH
+      run: |
+        echo "${{ secrets.PRIVATE_KEY }}" > private_key && chmod 400 private_key
 
-    - name: Build the Docker Image
-      run: docker compose build
+    - name: Copy Files to EC2
+      run: |
+        scp -o StrictHostKeyChecking=no -i private_key \
+        docker-compose.yml \
+        data \
+        src \
+        tests \
+        Dockerfile \
+        entrypoint.sh \
+        requirements.txt \
+        run_tests.py \
+        ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/
+
+    - name: Remove unused images and build new image
+      run: |
+        ssh -i private_key ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} '
+          cd ~
+          docker image prune -a -f
+          docker compose build
+        '
 
   deploy_to_ec2:
     name: Deploy to EC2
     needs: build_image
     runs-on: ubuntu-latest
     steps:
-    - name: copy Docker Compose file to EC2
-      run: |
-        scp -o StrictHostKeyChecking=no -i private_key docker-compose.yml ${USER}@${HOST}:~/docker-compose.yml
-
     - name: Deploy to EC2
       run: |
         echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
