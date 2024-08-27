@@ -86,11 +86,10 @@ jobs:
 
     - name: Remove all unused images
       run: docker image prune -a -f
-      
+
     - name: Build the Docker Image
       run: docker compose build
-
-jobs:
+      
   deploy_to_ec2:
     name: Deploy to EC2
     needs: build_image
