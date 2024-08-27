@@ -106,10 +106,10 @@ jobs:
       API_PORT: ${{ secrets.API_PORT }}
       CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
     steps:
-      - name: Setup SSH key
-        run: |
-          echo "$PRIVATE_KEY" > private_key
-          chmod 400 private_key
+      # - name: Setup SSH key
+      #   run: |
+      #     echo "$PRIVATE_KEY" > private_key
+      #     chmod 400 private_key
 
       # - name: Copy Docker Compose file to EC2
       #   run: |
@@ -122,15 +122,15 @@ jobs:
           USER: ${{ secrets.EC2_USER }}
           API_PORT: ${{ secrets.API_PORT }}
           CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
-      run: |
-        echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
-            ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} '
-            export API_PORT=${{ secrets.API_PORT }}
-            export CONTAINER_PORT=${{ secrets.CONTAINER_PORT }}
-            sudo docker compose pull
-            sudo docker compose down
-            sudo docker compose up -d
-          '
+        run: |
+          echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
+              ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} '
+              export API_PORT=${{ secrets.API_PORT }}
+              export CONTAINER_PORT=${{ secrets.CONTAINER_PORT }}
+              sudo docker compose pull
+              sudo docker compose down
+              sudo docker compose up -d
+            '
 
 
 
