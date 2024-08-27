@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: savepeter2/brazillian-orders-api-deployment:latest
+    image: brazillian-orders-api-deployment:latest
     volumes:
       - ./data:/Brazillian_Orders_Peter/data
     container_name: api-deployment-container
