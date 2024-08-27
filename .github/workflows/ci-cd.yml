@@ -89,17 +89,15 @@ jobs:
 
     - name: Build the Docker Image
       run: docker compose build
-      
+
   deploy_to_ec2:
     name: Deploy to EC2
     needs: build_image
     runs-on: ubuntu-latest
     steps:
     - name: copy Docker Compose file to EC2
-
-      # - name: Copy Docker Compose file to EC2
-      #   run: |
-      #     scp -o StrictHostKeyChecking=no -i private_key docker-compose.yml ${USER}@${HOST}:~/docker-compose.yml
+      run: |
+        scp -o StrictHostKeyChecking=no -i private_key docker-compose.yml ${USER}@${HOST}:~/docker-compose.yml
 
     - name: Deploy to EC2
       run: |
