@@ -110,9 +110,9 @@ jobs:
         API_PORT: ${{ secrets.API_PORT }}
         CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
       run: |
-        echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} '
-          scp -o StrictHostKeyChecking=no -i private_key docker-compose.yml ${USER}@${HOST}:/home/${USER}/docker-compose.yml
+        echo "$PRIVATE_KEY" > private_key.pem && chmod 400 private_key.pem
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER}@${HOST} '
+          scp -o StrictHostKeyChecking=no -i private_key.pem docker-compose.yml ${USER}@$ip-172-31-27-151:/home/${USER}/docker-compose.yml
             docker-compose pull
             docker image prune -a -f
           '
