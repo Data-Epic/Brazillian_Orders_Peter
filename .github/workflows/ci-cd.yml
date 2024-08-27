@@ -81,8 +81,11 @@ jobs:
         CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
     steps:
       - name: Setup SSH
+        env:
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         run: |
-          echo "${{ secrets.PRIVATE_KEY }}" > private_key.pem && chmod 400 private_key.pem
+          echo "$PRIVATE_KEY" >> $HOME/private_key.pem 
+          chmod 400 $HOME/private_key.pem
       # - name: Setup SSH
       #   run: |
       #     echo "${{ secrets.PRIVATE_KEY }}" > private_key
@@ -91,7 +94,7 @@ jobs:
 
       - name: Copy Files to EC2
         run: |
-          scp -o StrictHostKeyChecking=no -i private_key.pem \
+          scp -o StrictHostKeyChecking=no -i \
           docker-compose.yml \
           data \
           src \
@@ -104,7 +107,7 @@ jobs:
 
       - name: Remove unused images and build new image
         run: |
-          ssh -i private_key ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} '
+          ssh -i private_key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} '
             cd ~
             docker image prune -a -f
             docker compose build
