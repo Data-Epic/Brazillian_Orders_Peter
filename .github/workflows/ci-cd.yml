@@ -110,11 +110,14 @@ jobs:
       run: |
         echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
             ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} '
+            sudo su - root << EOF
           sudo docker compose pull
           sudo docker compose down
           sudo docker compose up -d
+
+          EOF
         '
-        
+
 
 
 
