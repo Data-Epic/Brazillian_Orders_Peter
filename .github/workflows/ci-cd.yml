@@ -82,7 +82,7 @@ jobs:
     steps:
       - name: Setup SSH
         run: |
-          echo "${{ secrets.PRIVATE_KEY }}" > private_key.pem && chmod 400 private_key
+          echo "${{ secrets.PRIVATE_KEY }}" > private_key.pem && chmod 400 private_key.pem
       # - name: Setup SSH
       #   run: |
       #     echo "${{ secrets.PRIVATE_KEY }}" > private_key
