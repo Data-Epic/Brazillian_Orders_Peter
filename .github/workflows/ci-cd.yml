@@ -115,7 +115,6 @@ jobs:
             docker-compose pull
             docker image prune -a -f
           '
-
   deploy_to_ec2:
     name: Deploy to EC2
     needs: build_image
