@@ -116,8 +116,15 @@ jobs:
       #     scp -o StrictHostKeyChecking=no -i private_key docker-compose.yml ${USER}@${HOST}:~/docker-compose.yml
 
       - name: Deploy to EC2
-        run: |
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} '
+        env:
+          PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          HOST: ${{ secrets.EC2_HOST }}
+          USER: ${{ secrets.EC2_USER }}
+          API_PORT: ${{ secrets.API_PORT }}
+          CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
+      run: |
+        echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
+            ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} '
             export API_PORT=${{ secrets.API_PORT }}
             export CONTAINER_PORT=${{ secrets.CONTAINER_PORT }}
             sudo docker compose pull
