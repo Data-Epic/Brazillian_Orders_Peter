@@ -112,6 +112,7 @@ jobs:
       run: |
         echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} '
+          scp -o StrictHostKeyChecking=no -i private_key docker-compose.yml ${USER}@${HOST}:/home/${USER}/docker-compose.yml
             docker-compose pull
             docker image prune -a -f
           '
