@@ -98,7 +98,7 @@ jobs:
   deploy_to_ec2:
     name: Deploy to EC2
     needs: build_and_push_image
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - name: Deploy to EC2
       env:
@@ -110,12 +110,9 @@ jobs:
       run: |
         echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
             ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} '
-            sudo su - root << EOF
           sudo docker compose pull
           sudo docker compose down
           sudo docker compose up -d
-
-          EOF
         '
 
 
