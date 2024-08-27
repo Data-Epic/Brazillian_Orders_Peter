@@ -90,24 +90,24 @@ jobs:
         repository: savepeter2/brazillian-orders-api-deployment
         tags: latest
 
-      - name: Setup SSH Key
-        env:
-          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-        run: |
-          echo "$PRIVATE_KEY" >> $HOME/private_key.pem 
-          chmod 400 $HOME/private_key.pem
+    - name: Setup SSH Key
+      env:
+        PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+      run: |
+        echo "$PRIVATE_KEY" >> $HOME/private_key.pem 
+        chmod 400 $HOME/private_key.pem
       # - name: Setup SSH
       #   run: |
       #     echo "${{ secrets.PRIVATE_KEY }}" > private_key
       #     chmod 600 private_key
       #     ssh-keygen -y -f private_key > private_key.pem
 
-      - name: Update Image on EC2
-        run: |
-          ssh -i $HOME/private_key.pem  -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} '
-            docker-compose pull
-            docker image prune -a -f
-          '
+    - name: Update Image on EC2
+      run: |
+        ssh -i $HOME/private_key.pem  -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} '
+          docker-compose pull
+          docker image prune -a -f
+        '
 
   deploy_to_ec2:
     name: Deploy to EC2
