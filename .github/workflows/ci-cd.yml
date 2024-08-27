@@ -80,13 +80,18 @@ jobs:
         API_PORT: ${{ secrets.API_PORT }}
         CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
     steps:
+      # - name: Setup SSH
+      #   run: |
+      #     echo "${{ secrets.PRIVATE_KEY }}" > private_key && chmod 400 private_key
       - name: Setup SSH
         run: |
-          echo "${{ secrets.PRIVATE_KEY }}" > private_key && chmod 400 private_key
+          echo "${{ secrets.PRIVATE_KEY }}" > private_key
+          chmod 600 private_key
+          ssh-keygen -y -f private_key > private_key.pem
 
       - name: Copy Files to EC2
         run: |
-          scp -o StrictHostKeyChecking=no -i private_key \
+          scp -o StrictHostKeyChecking=no -i private_key.pem \
           docker-compose.yml \
           data \
           src \
