@@ -102,6 +102,19 @@ jobs:
       #     chmod 600 private_key
       #     ssh-keygen -y -f private_key > private_key.pem
 
+    # - name: Update Image on EC2
+    #   env:
+    #     PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+    #     HOST: ${{ secrets.EC2_HOST }}
+    #     USER: ${{ secrets.EC2_USER }}
+    #     API_PORT: ${{ secrets.API_PORT }}
+    #     CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
+    #   run: |
+    #     echo "$PRIVATE_KEY" > private_key.pem && chmod 400 private_key.pem
+    #         ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER}@${HOST} '
+    #         docker-compose pull
+    #         docker image prune -a -f
+    #       '
     - name: Update Image on EC2
       env:
         PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
@@ -111,10 +124,26 @@ jobs:
         CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
       run: |
         echo "$PRIVATE_KEY" > private_key.pem && chmod 400 private_key.pem
-            ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER}@${HOST} '
-            docker-compose pull
-            docker image prune -a -f
-          '
+        ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER}@${HOST} 'mkdir -p ~/app'
+        scp -o StrictHostKeyChecking=no -i private_key.pem \
+          docker-compose.yml \
+          Dockerfile \
+          entrypoint.sh \
+          requirements.txt \
+          run_tests.py \
+          ${USER}@${HOST}:~/app/
+          
+        scp -r -o StrictHostKeyChecking=no -i private_key.pem \
+          src \
+          tests \
+          data \
+          ${USER}@${HOST}:~/app/
+
+        ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER}@${HOST} '
+          cd ~/app
+          docker-compose pull
+          docker image prune -a -f
+        '
   deploy_to_ec2:
     name: Deploy to EC2
     needs: build_image
