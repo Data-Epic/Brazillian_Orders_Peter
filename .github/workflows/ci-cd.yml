@@ -132,18 +132,18 @@ jobs:
           requirements.txt \
           run_tests.py \
           ${USER}@${HOST}:~/app/
-          
+
         scp -r -o StrictHostKeyChecking=no -i private_key.pem \
           src \
           tests \
           data \
           ${USER}@${HOST}:~/app/
 
-        ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER}@${HOST} '
-          cd ~/app
-          docker-compose pull
-          docker image prune -a -f
-        '
+  # ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER}@${HOST} '
+  #   cd ~/app
+  #   sudo docker-compose pull
+  #   sudo docker image prune -a -f
+  # '
   deploy_to_ec2:
     name: Deploy to EC2
     needs: build_image
