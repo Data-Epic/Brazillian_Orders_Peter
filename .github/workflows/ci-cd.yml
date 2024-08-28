@@ -1,0 +1,94 @@
+name: Brazilian Orders CI/CD Pipeline to EC2  
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+    source: ["main"]
+
+jobs:
+  build_image:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    environment: development
+    env:
+        PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+        HOST: ${{ secrets.EC2_HOST }}
+        USER: ${{ secrets.EC2_USER }}
+        API_PORT: ${{ secrets.API_PORT }}
+        CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v4
+    - name: Push to Docker hub
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        repository: savepeter2/brazillian-orders-api-deployment
+        tags: latest
+
+    - name: Copy files and directories to EC2
+      env:
+        PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+        HOST: ${{ secrets.EC2_HOST }}
+        USER: ${{ secrets.EC2_USER }}
+        API_PORT: ${{ secrets.API_PORT }}
+        CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
+      run: |
+        echo "$PRIVATE_KEY" > private_key.pem && chmod 400 private_key.pem
+        ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER}@${HOST} 'mkdir -p ~/app'
+        scp -o StrictHostKeyChecking=no -i private_key.pem \
+          docker-compose.yml \
+          Dockerfile \
+          entrypoint.sh \
+          requirements.txt \
+          run_tests.py \
+          ${USER}@${HOST}:~/app/
+
+        scp -r -o StrictHostKeyChecking=no -i private_key.pem \
+          src \
+          tests \
+          data \
+          ${USER}@${HOST}:~/app/
+
+  deploy_to_ec2:
+    name: Deploy to EC2
+    needs: build_image
+    runs-on: ubuntu-latest
+    steps:
+    - name: Pull image, prune and deploy to EC2
+      env:
+        PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+        HOST: ${{ secrets.EC2_HOST }}
+        USER: ${{ secrets.EC2_USER }}
+        API_PORT: ${{ secrets.API_PORT }}
+        CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
+      run: |
+        echo "$PRIVATE_KEY" > private_key.pem && chmod 400 private_key.pem
+        ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER}@${HOST} << EOF
+          cd ~/app
+          echo "API_PORT=${API_PORT}" >> .env
+          echo "CONTAINER_PORT=${CONTAINER_PORT}" >> .env
+          sudo docker-compose pull
+          sudo docker image prune -a -f
+          sudo docker-compose up -d
+        EOF
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
+
+
