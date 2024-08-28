@@ -115,7 +115,7 @@ jobs:
     #         docker-compose pull
     #         docker image prune -a -f
     #       '
-    - name: Update Image on EC2
+    - name: Copy files and directories to EC2
       env:
         PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         HOST: ${{ secrets.EC2_HOST }}
@@ -149,16 +149,32 @@ jobs:
     needs: build_image
     runs-on: ubuntu-latest
     steps:
-    - name: Deploy to EC2
+    - name: Pull image and remove unused images
+      env:
+        PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+        HOST: ${{ secrets.EC2_HOST }}
+        USER: ${{ secrets.EC2_USER }}
+        API_PORT: ${{ secrets.API_PORT }}
+        CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
       run: |
-        echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
-            ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} '
-            export API_PORT=${{ secrets.API_PORT }}
-            export CONTAINER_PORT=${{ secrets.CONTAINER_PORT }}
-
-            sudo docker compose down
-            sudo docker compose up -d
-          '
+        echo "$PRIVATE_KEY" > private_key.pem && chmod 400 private_key.pem
+        ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER}@${HOST} '
+          cd ~/app
+          export API_PORT=${{ secrets.API_PORT }}
+          export CONTAINER_PORT=${{ secrets.CONTAINER_PORT }}
+          sudo docker-compose pull
+          sudo docker image prune -a -f
+        '
+    - name: Start the container
+      run: |
+        echo "Starting the container"
+        ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER}@${HOST} '
+          cd ~/app
+          export API_PORT=${{ secrets.API_PORT }}
+          export CONTAINER_PORT=${{ secrets.CONTAINER_PORT }}
+          sudo docker-compose down
+          sudo docker-compose up -d
+        '
 
 
 
