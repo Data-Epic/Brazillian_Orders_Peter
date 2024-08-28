@@ -51,10 +51,6 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-# list_dicts_df = df_to_list_of_dicts(df)
-# json_df = jsonify(list_dicts_df)
-# print(json_df)
-
 @app.route('/api/load_sellers_data', methods=['POST'])
 def api_load_sellers_data(
 ):
