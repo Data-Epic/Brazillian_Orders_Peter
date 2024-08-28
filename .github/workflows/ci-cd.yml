@@ -111,7 +111,7 @@ jobs:
         CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
       run: |
         echo "$PRIVATE_KEY" > private_key.pem && chmod 400 private_key.pem
-          scp -o StrictHostKeyChecking=no -i private_key.pem docker-compose.yml ${USER}@${HOST}:/home/${USER}/ '
+            ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER}@${HOST} '
             docker-compose pull
             docker image prune -a -f
           '
