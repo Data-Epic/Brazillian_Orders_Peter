@@ -54,7 +54,6 @@ Process and analyze tables by executing the data processing endpoints
 
 The application is deployed to an EC2 instance and can be accessed at: http://3.139.54.83:8080/api/docs/#/
 
-
 ## Project Structure
 
 Brazillian_Orders_Peter/
