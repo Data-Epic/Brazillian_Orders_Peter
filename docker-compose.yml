@@ -11,7 +11,5 @@ services:
       - ./data:/Brazillian_Orders_Peter/data
     container_name: api-deployment-container
     entrypoint: ["/Brazillian_Orders_Peter/entrypoint.sh"]
-    # environment:   
-    #   - PORT=${CONTAINER_PORT:-8000}
     tty: true
     stdin_open: true

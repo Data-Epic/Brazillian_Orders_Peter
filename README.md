@@ -52,11 +52,10 @@ Process and analyze tables by executing the data processing endpoints
 
 ## Deployed Application URL
 
-The application is deployed to an EC2 instance and can be accessed at: http://18.223.169.57:8080/api/docs/#/
+The application is deployed to an EC2 instance and can be accessed at: http://3.139.54.83:8080/api/docs/#/
 
 
 ## Project Structure
-
 Brazillian_Orders_Peter/
 │
 ├── .github/

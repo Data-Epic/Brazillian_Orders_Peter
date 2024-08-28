@@ -84,9 +84,7 @@ def load_and_transform_data(file_path:str):
     """
     df = load_data(file_path)
     df = df.head(400)
-    # df = df.head(15000)
     df = transform__df(df)
-    # print("df", df.head())
     list_dicts_df = df_to_list_of_dicts(df)
     
     return {"status": "success",
@@ -129,7 +127,6 @@ def query_table_data(model:declarative_base, db:get_db):
     """
     records = db.query(model).all()
     records_filtered = records[:5]
-    # print("all sellers, ", sellers_filtered)
     records_list = []
     if records_filtered:
         for record in records_filtered:
@@ -177,8 +174,6 @@ def process_dim_tables(db: get_db,
     products_df = process_dim_table_df(products)
     sellers_df = process_dim_table_df(sellers)
     product_categories_df = process_dim_table_df(product_categories)
-
-    # print("orders", orders)
 
     list_of_tables = [orders_df, order_items_df, customers_df, 
                             order_payments_df,products_df, 
