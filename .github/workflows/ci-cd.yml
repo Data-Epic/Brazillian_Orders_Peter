@@ -174,8 +174,8 @@ jobs:
           cd ~/app
           echo "API_PORT=${API_PORT}" >> .env
           echo "CONTAINER_PORT=${CONTAINER_PORT}" >> .env
-          docker-compose pull
-          docker image prune -a -f
+          sudo docker-compose pull
+          sudo docker image prune -a -f
         EOF
     - name: Start the container
       run: |
