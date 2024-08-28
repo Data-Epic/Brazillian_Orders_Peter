@@ -56,6 +56,7 @@ The application is deployed to an EC2 instance and can be accessed at: http://3.
 
 
 ## Project Structure
+
 Brazillian_Orders_Peter/
 │
 ├── .github/
