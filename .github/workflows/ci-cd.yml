@@ -2,9 +2,9 @@ name: Brazilian Orders CI/CD Pipeline to EC2
 
 on:
   push:
-    branches: ["main"]
+    branches: ["orders_api_deployment"]
   pull_request:
-    branches: ["main"]
+    branches: ["orders_api_deployment"]
 
 jobs:
   build_image:
