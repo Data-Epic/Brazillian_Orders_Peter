@@ -58,26 +58,32 @@ The application is deployed to an EC2 instance and can be accessed at: http://18
 ## Project Structure
 
 Brazillian_Orders_Peter/
-├── github/worklows/ci-cd.yml    # CICD Workflow configuration file
-├── data/                        # Input CSV files (create this directory)
-├── src/                         # Source code files
-│   ├── static
-│   ├── uploads
-│   ├── __init__.py
-│   └── api.py
-│   ├── database.py
-│   └── main.py
-│   ├── processing.py
-│   └── utils.py
-│   
+│
+├── .github/
+│   └── workflows/
+│       └── ci-cd.yml           # CI/CD Workflow configuration file
+│
+├── data/                       # Input CSV files
+│
+├── src/
+│   ├── static/                 # Static files for the web application
+│   ├── uploads/                # Directory for uploaded files
+│   ├── init.py
+│   ├── api.py                  # API endpoints
+│   ├── database.py             # Database operations
+│   ├── main.py                 # Main application file
+│   ├── processing.py           # Data processing logic
+│   └── utils.py                # Utility functions
+│
 ├── tests/                      # Unit tests
+│
 ├── .gitignore                  # Git ignore file
 ├── Dockerfile                  # Docker configuration
 ├── docker-compose.yml          # Docker Compose configuration
-├── entrypoint.sh               # Bash command line scripts
-├── requirements.txt            # Application dependencies
-└── README.md                   # This file
-└── runtests.py                 # A python file that runs all tests
+├── entrypoint.sh               # Bash scripts for container entry point
+├── requirements.txt            # Python dependencies
+├── README.md                   # Project documentation
+└── run_tests.py                # Script to run all tests
 
 ## API Endpoints
 
