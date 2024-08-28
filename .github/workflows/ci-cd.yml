@@ -139,15 +139,27 @@ jobs:
           data \
           ${USER}@${HOST}:~/app/
 
-  # ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER}@${HOST} '
-  #   cd ~/app
-  #   sudo docker-compose pull
-  #   sudo docker image prune -a -f
-  # '
   deploy_to_ec2:
     name: Deploy to EC2
     needs: build_image
     runs-on: ubuntu-latest
+    # steps:
+    # - name: Pull image and remove unused images
+    #   env:
+    #     PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+    #     HOST: ${{ secrets.EC2_HOST }}
+    #     USER: ${{ secrets.EC2_USER }}
+    #     API_PORT: ${{ secrets.API_PORT }}
+    #     CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
+    #   run: |
+    #     echo "$PRIVATE_KEY" > private_key.pem && chmod 400 private_key.pem
+    #     ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER}@${HOST} '
+    #       export API_PORT=${{ secrets.API_PORT }}
+    #       export CONTAINER_PORT=${{ secrets.CONTAINER_PORT }}
+    #       cd ~/app
+    #       sudo docker-compose pull
+    #       sudo docker image prune -a -f
+    #     '
     steps:
     - name: Pull image and remove unused images
       env:
@@ -158,13 +170,13 @@ jobs:
         CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
       run: |
         echo "$PRIVATE_KEY" > private_key.pem && chmod 400 private_key.pem
-        ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER}@${HOST} '
+        ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER}@${HOST} << EOF
           cd ~/app
-          export API_PORT=${{ secrets.API_PORT }}
-          export CONTAINER_PORT=${{ secrets.CONTAINER_PORT }}
-          sudo docker-compose pull
-          sudo docker image prune -a -f
-        '
+          echo "API_PORT=${API_PORT}" >> .env
+          echo "CONTAINER_PORT=${CONTAINER_PORT}" >> .env
+          docker-compose pull
+          docker image prune -a -f
+        EOF
     - name: Start the container
       run: |
         echo "Starting the container"
