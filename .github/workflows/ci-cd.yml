@@ -1,4 +1,4 @@
-name: Brazilian Orders CI/CD Pipeline to EC2 
+name: Brazilian Orders CI/CD Pipeline to EC2  
 
 on:
   push:
