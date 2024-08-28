@@ -1,5 +1,4 @@
 FROM python:3.9-slim
-
 WORKDIR /Brazillian_Orders_Peter
 
 COPY requirements.txt requirements.txt
