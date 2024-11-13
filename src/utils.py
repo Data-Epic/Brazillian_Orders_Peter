@@ -3,12 +3,12 @@ import logging
 import polars as pl
 from src.database import get_db
 from src.processing import load_data, transform_df, process_dim_table_df
-from flask import request, jsonify
+from flask import request, jsonify, Flask
 from flask_swagger_ui import get_swaggerui_blueprint
-from src.api import app
 from sqlalchemy import inspect
 from sqlalchemy.ext.declarative import declarative_base
 
+app = Flask(__name__)
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
