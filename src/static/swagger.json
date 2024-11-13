@@ -1,0 +1,648 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Brazillian Orders ETL API",
+    "description": "This is a simple API to extract, transform and load orders from a Brazillian e-commerce platform.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "/api",
+      "description": "Development server"
+    }
+  ],
+  "paths": {
+    "/load_sellers_data": {
+      "post": {
+        "tags": [
+          "Data Loading"
+        ],
+        "summary": "Load sellers data from a CSV file",
+        "description": "Load sellers data from a CSV file and store it in a database",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Data loaded successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+      "/load_customers_data": {
+        "post": {
+          "tags": [
+            "Data Loading"
+          ],
+          "summary": "Load the Customers data from a CSV file",
+          "description": "Load the Customers data from a CSV file and store it in a database",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "file": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Data loaded successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/get_sellers": {
+        "get": {
+          "tags": [
+            "Data Retrieval"
+          ],
+          "summary": "Retrieve the Sellers data from the database",
+          "description": "Retrieve the top 5 Sellers data from the database and return it as a JSON response",
+          "responses": {
+            "200": {
+              "description": "Data loaded successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/get_customers": {
+        "get": {
+          "tags": [
+            "Data Retrieval"
+          ],
+          "summary": "Retrieve the Customers data from the database",
+          "description": "Retrieve the top 5 Customers data from the database and return it as a JSON response",
+          "responses": {
+            "200": {
+              "description": "Data loaded successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/load_orders_data": {
+        "post": {
+          "tags": [
+            "Data Loading"
+          ],
+          "summary": "Load the Orders data from a CSV file",
+          "description": "Load the Orders data from a CSV file and store it in a database",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "file": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Data loaded successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/get_orders": {
+        "get": {
+          "tags": [
+            "Data Retrieval"
+          ],
+          "summary": "Retrieve the Orders data from the database",
+          "description": "Retrieve the top 5 Orders data from the database and return it as a JSON response",
+          "responses": {
+            "200": {
+              "description": "Data loaded successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/load_order_items_data": {
+        "post": {
+          "tags": [
+            "Data Loading"
+          ],
+          "summary": "Load the Order Items data from a CSV file",
+          "description": "Load the Order Items data from a CSV file and store it in a database",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "file": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Data loaded successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/get_order_items": {
+        "get": {
+          "tags": [
+            "Data Retrieval"
+          ],
+          "summary": "Retrieve the Order Items data from the database",
+          "description": "Retrieve the top 5 Order Items data from the database and return it as a JSON response",
+          "responses": {
+            "200": {
+              "description": "Data loaded successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/load_order_payments_data": {
+        "post": {
+          "tags": [
+            "Data Loading"
+          ],
+          "summary": "Load the Order Payments data from a CSV file",
+          "description": "Load the Order Payments data from a CSV file and store it in a database",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "file": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Data loaded successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/get_order_payments": {
+        "get": {
+          "tags": [
+            "Data Retrieval"
+          ],
+          "summary": "Retrieve the Order Payments data from the database",
+          "description": "Retrieve the top 5 Order Payments data from the database and return it as a JSON response",
+          "responses": {
+            "200": {
+              "description": "Data loaded successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/load_products_data": {
+        "post": {
+          "tags": [
+            "Data Loading"
+          ],
+          "summary": "Load the Products data from a CSV file",
+          "description": "Load the Products data from a CSV file and store it in a database",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "file": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Data loaded successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/get_products": {
+        "get": {
+          "tags": [
+            "Data Retrieval"
+          ],
+          "summary": "Retrieve the Products data from the database",
+          "description": "Retrieve the top 5 Products data from the database and return it as a JSON response",
+          "responses": {
+            "200": {
+              "description": "Data loaded successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/load_products_category": {
+        "post": {
+          "tags": [
+            "Data Loading"
+          ],
+          "summary": "Load the Products Category data from a CSV file",
+          "description": "Load the Products Category data from a CSV file and store it in a database",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "file": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Data loaded successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/get_products_category": {
+        "get": {
+          "tags": [
+            "Data Retrieval"
+          ],
+          "summary": "Retrieve the Products Category data from the database",
+          "description": "Retrieve the top 5 Products Category data from the database and return it as a JSON response",
+          "responses": {
+            "200": {
+              "description": "Data loaded successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/process_fact_table": {
+        "post": {
+          "tags": [
+            "Data Processing"
+          ],
+          "summary": "Process the Fact Table",
+          "description": "Process the Fact Table by joining the Customers, Orders, Order Items, Order Payments, Products and Products Category data on their common fields and store it in a database",
+          "responses": {
+            "200": {
+              "description": "Data processed successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/get_fact_table": {
+        "get": {
+          "tags": [
+            "Data Retrieval"
+          ],
+          "summary": "Retrieve the Fact Table data from the database",
+          "description": "Retrieve the top 5 Fact Table data from the database and return it as a JSON response",
+          "responses": {
+            "200": {
+              "description": "Data loaded successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/load_top_sellers": {
+        "post": {
+          "tags": [
+            "Data Processing"
+          ],
+          "summary": "Analyze the fact table and extract the top sellers",
+          "description": "Analyze the fact table and extract the top sellers based on the total sales amount and store it in a database",
+          "responses": {
+            "200": {
+              "description": "Data loaded successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/get_top_sellers": {
+        "get": {
+          "tags": [
+            "Data Retrieval"
+          ],
+          "summary": "Retrieve the top sellers data from the database",
+          "description": "Retrieve the top 5 sellers data from the database and return it as a JSON response",
+          "responses": {
+            "200": {
+              "description": "Data loaded successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/load_top_selling_product_category": {
+        "post": {
+          "tags": [
+            "Data Processing"
+          ],
+          "summary": "Analyze the fact table and extract the top customers",
+          "description": "Analyze the fact table and extract the top customers based on the total sales amount and store it in a database",
+          "responses": {
+            "200": {
+              "description": "Data loaded successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/get_top_selling_product_category": {
+        "get": {
+          "tags": [
+            "Data Retrieval"
+          ],
+          "summary": "Retrieve the top selling product category data from the database",
+          "description": "Retrieve the top 5 selling product category data from the database and return it as a JSON response",
+          "responses": {
+            "200": {
+              "description": "Data loaded successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/load_orders_status_analysis": {
+        "post": {
+          "tags": [
+            "Data Processing"
+          ],
+          "summary": "Analyze the fact table and extract the orders status analysis",
+          "description": "Analyze the fact table and extract the orders status analysis based on the total sales amount and store it in a database",
+          "responses": {
+            "200": {
+              "description": "Data loaded successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/get_orders_status_analysis": {
+        "get": {
+          "tags": [
+            "Data Retrieval"
+          ],
+          "summary": "Retrieve the orders status analysis data from the database",
+          "description": "Retrieve the orders status analysis data from the database and return it as a JSON response",
+          "responses": {
+            "200": {
+              "description": "Data loaded successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/load_average_delivery_duration": {
+        "post": {
+          "tags": [
+            "Data Processing"
+          ],
+          "summary": "Analyze the fact table and extract the average delivery duration",
+          "description": "Analyze the fact table and extract the average delivery duration based on the total sales amount and store it in a database",
+          "responses": {
+            "200": {
+              "description": "Data loaded successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/get_average_delivery_duration": {
+        "get": {
+          "tags": [
+            "Data Retrieval"
+          ],
+          "summary": "Retrieve the average delivery duration data from the database",
+          "description": "Retrieve the average delivery duration data from the database and return it as a JSON response",
+          "responses": {
+            "200": {
+              "description": "Data loaded successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/analyze_loyal_customers": {
+        "post": {
+          "tags": [
+            "Data Processing"
+          ],
+          "summary": "Analyze the fact table and extract the average delivery duration",
+          "description": "Analyze the fact table and extract the average delivery duration based on the total sales amount and store it in a database",
+          "responses": {
+            "200": {
+              "description": "Data loaded successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/get_loyal_customers": {
+        "get": {
+          "tags": [
+            "Data Retrieval"
+          ],
+          "summary": "Retrieve the loyal customers data from the database",
+          "description": "Retrieve the loyal customers data from the database and return it as a JSON response",
+          "responses": {
+            "200": {
+              "description": "Data loaded successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      }
+  }
+}
