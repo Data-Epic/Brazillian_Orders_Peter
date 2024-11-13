@@ -21,24 +21,13 @@ curr_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 data_dir = os.path.join(curr_dir, "data")
 WORKING_DIR = "/Brazillian_Orders_Peter/data"
 
-# orders_df_path = f"{WORKING_DIR}/olist_order_items_dataset.csv"
-# order_items_df_path = f"{WORKING_DIR}/olist_orders_dataset.csv"
-# customers_df_path = f"{WORKING_DIR}/olist_customers_dataset.csv"
-# order_payments_df_path = f"{WORKING_DIR}/olist_order_payments_dataset.csv"
-# products_df_path = f"{WORKING_DIR}/olist_products_dataset.csv"
-# sellers_df_path = f"{WORKING_DIR}/olist_sellers_dataset.csv"
-# product_category_df_path = f"{WORKING_DIR}/product_category_name_translation.csv"
-
-orders_df_path = os.path.join(data_dir, "olist_order_items_dataset.csv")
-order_items_df_path = os.path.join(data_dir, "olist_orders_dataset.csv")
-customers_df_path = os.path.join(data_dir, "olist_customers_dataset.csv")
-order_payments_df_path = os.path.join(data_dir, "olist_order_payments_dataset.csv")
-products_df_path = os.path.join(data_dir, "olist_products_dataset.csv")
-sellers_df_path = os.path.join(data_dir, "olist_sellers_dataset.csv")
-product_category_df_path = os.path.join(
-    data_dir, "product_category_name_translation.csv"
-)
-
+orders_df_path = f"{WORKING_DIR}/olist_order_items_dataset.csv"
+order_items_df_path = f"{WORKING_DIR}/olist_orders_dataset.csv"
+customers_df_path = f"{WORKING_DIR}/olist_customers_dataset.csv"
+order_payments_df_path = f"{WORKING_DIR}/olist_order_payments_dataset.csv"
+products_df_path = f"{WORKING_DIR}/olist_products_dataset.csv"
+sellers_df_path = f"{WORKING_DIR}/olist_sellers_dataset.csv"
+product_category_df_path = f"{WORKING_DIR}/product_category_name_translation.csv"
 
 orders_df = load_data(orders_df_path)
 order_items_df = load_data(order_items_df_path)
