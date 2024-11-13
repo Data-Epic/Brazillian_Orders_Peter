@@ -1,8 +1,10 @@
 FROM python:3.9-slim
 WORKDIR /Brazillian_Orders_Peter
 
-COPY requirements.txt requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+COPY pyproject.toml pyproject.toml
+COPY poetry.lock poetry.lock
+RUN pip install poetry
+RUN poetry install
 
 COPY entrypoint.sh /Brazillian_Orders_Peter/entrypoint.sh
 RUN chmod +x /Brazillian_Orders_Peter/entrypoint.sh
