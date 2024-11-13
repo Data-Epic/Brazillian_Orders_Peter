@@ -1,4 +1,4 @@
-name: Brazilian Orders CI/CD Pipeline to EC2  
+name: Brazilian Orders CI/CD Pipeline to EC2
 
 on:
   push:
@@ -8,6 +8,22 @@ on:
     source: ["main"]
 
 jobs:
+  pre-commit:
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          pip install poetry
+          poetry install
+      - name: Run pre-commit
+        run: |
+          poetry run pre-commit run --all-files
+
   build_image:
     name: Build Docker Image
     runs-on: ubuntu-latest
@@ -43,7 +59,8 @@ jobs:
           docker-compose.yml \
           Dockerfile \
           entrypoint.sh \
-          requirements.txt \
+          pyproject.toml \
+          poetry.lock \
           run_tests.py \
           ${USER}@${HOST}:~/app/
 
@@ -75,20 +92,3 @@ jobs:
           sudo docker image prune -a -f
           sudo docker-compose up -d
         EOF
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       
-
-
