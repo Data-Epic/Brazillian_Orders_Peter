@@ -1,7 +1,7 @@
 #!/bin/bash
-set -e  
+set -e
 echo "Running tests..."
-python run_tests.py
+poetry run python run_tests.py
 echo "Starting the application..."
-python src/main.py 
+poetry run python src/main.py
 tail -f /dev/null
