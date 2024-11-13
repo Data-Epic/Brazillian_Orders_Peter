@@ -4,6 +4,7 @@
 
 This project implements an ETL (Extract, Transform, Load) pipeline application for the Brazilian E-Commerce Public Dataset by Olist. It uses Polars for data processing and DuckDB as the target database. The entire pipeline, including data ingestion scripts, unit tests, and the DuckDB database, is containerized using Docker for easy deployment and scalability. A Flask application provides API endpoints for data processing and retrieval, and a CI/CD pipeline automates deployment to an EC2 instance.
 
+
 ## Features
 
 Data extraction from multiple CSV files in the Olist dataset
